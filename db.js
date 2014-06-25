@@ -1,0 +1,1 @@
+exports.mongoConnection = process.env.mongoDbConnection || "mongodb://localhost:27017/tetris";
