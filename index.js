@@ -4,7 +4,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-app.use('/app', express.static('../src'));
+app.use('/app', express.static('/src'));
 
 var players = {};
 var scores;
