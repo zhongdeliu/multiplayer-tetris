@@ -4,7 +4,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-app.use('/app', express.static('src'));
+app.use('/', express.static('src'));
 
 var players = {};
 var scores;
@@ -76,4 +76,4 @@ io.on('connection', function(socket) {
 });
 
 
-server.listen(process.env.PORT);
+server.listen(process.env.PORT || 2550);

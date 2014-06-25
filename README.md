@@ -27,6 +27,6 @@ To start the Server:
 ```
 It starts the express web and the socket server. The express server only delivers the static files from /src to the http route /app.
 
-Point Browser to: `http://localhost:2550/app` (alter the hostname to match your node server), enter a name and play or watch others currently playing - live.
+Point Browser to: `http://localhost:2550` (alter the hostname/port to match your node server), enter a name and play or watch others currently playing - live.
 
 
