@@ -63,14 +63,14 @@ io.on('connection', function(socket) {
         
         var scoreEntry = new Score(data);
         scoreEntry.save();
-        Score.find().sort({date: -1}).exec(function(err, scoresData) {
+        Score.find().sort({score: -1}).exec(function(err, scoresData) {
             if (err) return console.error(err);
             io.emit('scores', scoresData);
         });
     });
 
     io.emit('players', players);
-    Score.find().sort({date: -1}).exec(function(err, scoresData) {
+    Score.find().sort({score: -1}).exec(function(err, scoresData) {
         if (err) return console.error(err);
         io.emit('scores', scoresData);
     });
