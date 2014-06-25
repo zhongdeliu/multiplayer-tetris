@@ -1,20 +1,26 @@
-var fs = require('fs');
+var dbConfig = require('./db.js');
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var mongoose = require('mongoose');
 
 app.use('/', express.static('src'));
 
 var players = {};
-var scores;
 
-fs.readFile('scores.json', function(err, data) {
-    if (data) {
-        scores = JSON.parse(data.toString());
-    } else {
-        scores = [];
-    }
+mongoose.connect(dbConfig.mongoConnection);
+var scoreSchema = mongoose.Schema({
+    name: String,
+    score: Number,
+    level: Number,
+    rowCount: Number
+});
+var Score = mongoose.model('Score', scoreSchema);
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
 });
 
 io.on('connection', function(socket) {
@@ -54,24 +60,21 @@ io.on('connection', function(socket) {
     });
     socket.on('score submit', function(data) {
         data.name = socket.name;
-        for (var i = 0; i < scores.length; i++) {
-            if (data.score > scores[i].score) {
-                scores.splice(i, 0, data);
-                break;
-            }
-        }
-        if (!scores || !scores[i]) {
-            scores = [data];
-        }
-        if (scores.length > 100) {
-            scores = scores.slice(0, 100);
-        }
-        fs.writeFile('scores.json', JSON.stringify(scores));
-        io.emit('scores', scores);
+        
+        var scoreEntry = new Score(data);
+        scoreEntry.save();
+        Score.find().sort({date: -1}).exec(function(err, scoresData) {
+            if (err) return console.error(err);
+            io.emit('scores', scoresData);
+        });
     });
 
     io.emit('players', players);
-    io.emit('scores', scores);
+    Score.find().sort({date: -1}).exec(function(err, scoresData) {
+        if (err) return console.error(err);
+        io.emit('scores', scoresData);
+    });
+    
 
 });
 

@@ -7,4 +7,5 @@ bin/
 node_modules/
 bower_components/
 
+db.js
 scores.json
