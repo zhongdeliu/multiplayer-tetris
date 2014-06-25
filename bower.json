@@ -1,0 +1,11 @@
+{
+  "name": "zhongdeliu",
+  "version": "0.2.0",
+  "devDependencies": {
+    "angular": "~1.2.16",
+    "socket.io-client": "https://github.com/Automattic/socket.io-client.git#~1.0.4",
+    "foundation": "zurb/bower-foundation#~5.2.3",
+    "easeljs": "*"
+  },
+  "dependencies": {}
+}

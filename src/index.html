@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset="utf-8"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tetris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/tetris.css">
+
+    <script type="text/javascript" src="js/lib/socket.io.js"></script>
+    <script type="text/javascript" src="js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="js/lib/easeljs-0.7.1.min.js"></script>
+    <script type="text/javascript" src="js/App.js"></script>
+    <script type="text/javascript" src="js/src/Settings.js"></script>
+    <script type="text/javascript" src="js/src/Services.js"></script>
+    <script type="text/javascript" src="js/src/GameLogic.js"></script>
+    <script type="text/javascript" src="js/src/Drawing.js"></script>
+
+</head>
+<body ng-controller="GameController" ng-init="gameStopped=true">
+    <nav class="top-bar">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="./">Tetris</a></h1>
+            </li>
+        </ul>
+        <section class="top-bar-section">
+            <ul class="right">
+                <li><a href="#">{{playerName}}</a></li>
+            </ul>
+        </section>
+    </nav>
+
+    <div id="wrapper">
+        <form>
+            <div class="row" ng-hide="gameInitialized">
+                <div class="medium-4 medium-centered columns">
+                    <div class="row collapse">
+                        <div class="medium-8 columns">
+                            <input type="text" placeholder="Your name" ng-model="inputName" />
+                            <input type="checkbox" id="checkbox1" ng-model="isDuell" ng-hide="true"/><label ng-hide="true" for="checkbox1">Duell</label>
+                            <input type="text" placeholder="GameName" ng-model="gameName" ng-show="isDuell" />
+                        </div>
+                        <div class="medium-4 columns">
+                            <a href="#" class="button postfix" ng-click="init()">Go</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row" ng-show="gameInitialized">
+            <div class="medium-3 columns">
+                <div class="panel text-center">
+                    <button ng-click="startGame()" class="button success">Start</button>
+                    <button ng-click="stopGame()" class="button">Stop</button>
+                    <button ng-click="resetGame()" class="button secondary">RESET</button>
+                </div>
+            </div>
+            <div class="medium-4 columns text-center">
+                <canvas id="canvas" width="240" height="480"></canvas>
+                <div id="game-over" ng-show="gameOver">Game Over</div>
+            </div>
+            <div class="medium-1 columns">
+                <h3><small>Next:</small></h3>
+                <img ng-src="{{thumbnails[nextBlock.type]}}" />
+            </div>
+            <div class="medium-2 columns">
+                <div class="panel callout text-center">
+                    <h2><small>Punkte:</small><br/> {{points}}</h2>
+                    <h2><small>Level:</small><br/> {{level}}</h2>
+                    <h3><small>Reihen:</small><br/> {{rowCount}}</h3>
+                </div>
+            </div>
+            <div class="medium-2 columns">
+                <div class="panel text-center">
+                    <ul class="no-bullet list-img">
+                        <li ng-repeat="(key, block) in blocksCount">
+                            <img ng-src="{{thumbnails[key]}}" width="25" />
+                            <span>{{block.count}} <small>({{block.count/totalBlockCount * 100 | number:2}}%)</small></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="small-block-grid-5" ng-show="playersRoom">
+                <li ng-repeat="player in playersRoom" ng-hide="player.name==playerName">
+                    <p>{{player.name}}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="panel text-center">
+                <ul class="small-block-grid-5" ng-show="players">
+                    <li ng-repeat="player in players" ng-hide="player.name==playerName">
+                        <p>{{player.name}}</p>
+                        <div ng-show="player.game && player.game.field">
+                            <img class="other-field" src="{{player.game.field}}">
+                            <p>
+                                <small>P:</small> {{player.game.points}}
+                                <br>
+                                <small>L:</small> {{player.game.level}}
+                                <br>
+                                <small>R:</small> {{player.game.rowCount}}
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <h2>Highscore</h2>
+            <ol>
+                <li ng-repeat="score in scores">
+                    <h4>{{score.score}} <small> Level {{score.level}}, Reihen: {{score.rowCount}} - <b>{{score.name}}</b></small></h4>
+                </li>
+            </ol>
+        </div>
+        <!--div class="row collapse">
+            <h3>Chat</h3>
+            <div class="medium-4 columns">
+                <div id="chat">
+                    <p ng-repeat="message in chat">{{message}}</p>
+                </div>
+                <div class="row collapse">
+                    <div class="medium-8 columns">
+                        <input type="text" placeholder="Your message" ng-model="chatMessage" />
+                    </div>
+                    <div class="medium-4 columns">
+                        <a href="#" class="button postfix" ng-click="sendChatMessage()">Send</a>
+                    </div>
+                </div>
+            </div>
+            <div class="medium-8 columns">
+                <ul class="no-bullet" id="chatUsers">
+                    <li ng-repeat="player in players">
+                        {{player.name}}
+                    </li>
+                </ul>
+            </div>
+        </div-->
+    </div>
+</body>
+</html>
