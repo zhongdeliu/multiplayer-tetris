@@ -13,17 +13,16 @@ Development/Setup
 -----
 Dependencies for the Server (npm)
 ```
-    cd server
     npm install
 ```
 Dependencies for the client (hard copied within the repository)
 ```
     src/js/libs
 ```
+But you can use bower to fetch a copy of them: `bower install`
 
 To start the Server:
 ```
-    cd server
     node index.js
 ```
 It starts the express web and the socket server. The express server only delivers the static files from /src to the http route /app.
