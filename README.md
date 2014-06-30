@@ -8,6 +8,7 @@ Multiplayer Javascript Tetris (node.js, easeljs, angular.js, socket.io, foundati
 * Live updates/broadcast of all players playing
 * Highscores
 
+Demo here: http://multi-tetris.herokuapp.com/
 
 Development/Setup
 -----
@@ -30,3 +31,4 @@ It starts the express web and the socket server. The express server only deliver
 Point Browser to: `http://localhost:2550` (alter the hostname/port to match your node server), enter a name and play or watch others currently playing - live.
 
 
+Play here: http://multi-tetris.herokuapp.com/
