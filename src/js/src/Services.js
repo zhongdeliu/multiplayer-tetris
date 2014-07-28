@@ -13,7 +13,8 @@ angular.module('Services', [
                 rotation: 0,
                 position: {
                     x: 3,
-                    y: -1
+                    y: -1,
+                    fixed: false
                 }
             };
         },
@@ -24,7 +25,8 @@ angular.module('Services', [
                 rotation: 0,
                 position: {
                     x: 0,
-                    y: 0
+                    y: 0,
+                    fixed: false
                 }
             };
         }

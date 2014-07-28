@@ -60,7 +60,6 @@ angular.module('App', [
         var rowsToRemove = [];
         var currentRow;
         var hasFullRow;
-        var blockFixed = false;
 
         //No ActiveBlock -> New Block
         if (!$scope.activeBlock) {
@@ -98,6 +97,7 @@ angular.module('App', [
                 if (checkMove(ACTION.DOWN)) {
                     $scope.activeBlock.position.y++;
                 } else {
+                    $scope.activeBlock.position.fixed = true;
                     updatePoints({
                         droppedLines: h
                     });
@@ -147,8 +147,33 @@ angular.module('App', [
                             }
                         }
                     }
-                    blockFixed = true;
+                    $scope.activeBlock.position.fixed = true;
                 }
+            }
+
+            if ($scope.activeBlock.position.fixed) {
+                //Check for complete rows
+                for (i = 0; i < fieldDimension[1]; i++) {
+                    for (j = 0; j < fieldDimension[0]; j++) {
+                        if (currentRow !== i) {
+                            if (hasFullRow) {
+                                rowsToRemove.push(currentRow);
+                            }
+                            currentRow = i;
+                            hasFullRow = true;
+                        }
+                        if (!fieldValues[i][j]) {
+                            hasFullRow = false;
+                            break;
+                        }
+                    }
+                }
+                if (hasFullRow) {
+                    rowsToRemove.push(currentRow);
+                }
+                removeRows(rowsToRemove);
+
+                $scope.activeBlock = false;
             }
 
             socket.emit('game status', {
@@ -157,31 +182,6 @@ angular.module('App', [
                 rowCount: $scope.rowCount,
                 field: stage.toDataURL()
             });
-        }
-
-        if (blockFixed) {
-            //Check for complete rows
-            for (i = 0; i < fieldDimension[1]; i++) {
-                for (j = 0; j < fieldDimension[0]; j++) {
-                    if (currentRow !== i) {
-                        if (hasFullRow) {
-                            rowsToRemove.push(currentRow);
-                        }
-                        currentRow = i;
-                        hasFullRow = true;
-                    }
-                    if (!fieldValues[i][j]) {
-                        hasFullRow = false;
-                        break;
-                    }
-                }
-            }
-            if (hasFullRow) {
-                rowsToRemove.push(currentRow);
-            }
-            removeRows(rowsToRemove);
-
-            $scope.activeBlock = false;
         }
 
         if (!$scope.gameStopped) {
@@ -229,6 +229,10 @@ angular.module('App', [
         var x = $scope.activeBlock.position.x;
         var y = $scope.activeBlock.position.y;
         var r = $scope.activeBlock.rotation;
+        if ($scope.activeBlock.position.fixed) {
+            return false;
+        }
+
         switch (direction) {
             case ACTION.ROTATE:
                 y = (y === -1) ? 0 : y;
