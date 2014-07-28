@@ -427,4 +427,9 @@ angular.module('App', [
             $scope.scores = scores;
         });
     });
+    socket.on('version', function(version) {
+        $scope.$apply(function() {
+            $scope.version = version;
+        });
+    });    
 });

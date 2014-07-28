@@ -5,6 +5,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoose = require('mongoose');
 
+var packagejson = require('./package.json');
+
 app.use('/', express.static('src'));
 
 var players = {};
@@ -75,6 +77,7 @@ io.on('connection', function(socket) {
         io.emit('scores', scoresData);
     });
     
+    io.emit('version', packagejson.version);
 
 });
 
