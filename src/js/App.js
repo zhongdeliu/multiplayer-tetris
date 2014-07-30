@@ -430,11 +430,13 @@ angular.module('App', [
     socket.on('duell.rowPlus', function(data) {
        if ($scope.isDuellMode) {
             var freeBlock = (Math.random() * fieldDimension[0]) | 0;
-            for (var i = data.rowPlus - 1; i--; ) {
+            for (var i = data.rowPlus; i--; ) {
                 fieldValues.splice(0, 1);
                 fieldValues.push(createBlockRow(freeBlock));
             }
+            $scope.duellLog.unshift(data);
        }
+       
     });
     socket.on('players', function(players) {
         $scope.$apply(function() {

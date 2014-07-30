@@ -57,6 +57,11 @@
                     <button ng-click="stopGame()" class="button">Stop</button>
                     <button ng-click="resetGame()" class="button secondary">RESET</button>
                 </div>
+                <ul class="log">
+                    <li ng-repeat="log in duellLog">
+                        {{log.playerName}} sendet <strong>{{log.rowPlus}}</strong> Reihen
+                    </li>
+                </ul>
             </div>
             <div class="medium-4 columns text-center">
                 <canvas id="canvas" width="240" height="480"></canvas>

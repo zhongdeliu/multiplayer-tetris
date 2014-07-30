@@ -47,10 +47,10 @@ io.on('connection', function(socket) {
         }
         io.emit('players', players);
         
-        if (game.rowPlus > 0) {
+        if (game.rowPlus > 1) {
             io.emit('duell.rowPlus', {
                 player: socket.name,
-                rowPlus: game.rowPlus
+                rowPlus: game.rowPlus - 1
             });    
         }
     });

@@ -41,3 +41,9 @@ body {
     height: 150px;
     width: auto;
 }
+
+.log {
+    height: 10em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
