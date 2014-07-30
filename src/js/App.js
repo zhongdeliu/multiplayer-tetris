@@ -427,10 +427,10 @@ angular.module('App', [
 
     //Socket stuff
     socket = io.connect($window.location.protocol + '//' + $window.location.host);
-    socket.on('rowPlus', function(data) {
+    socket.on('duell.rowPlus', function(data) {
        if ($scope.isDuellMode) {
             var freeBlock = (Math.random() * fieldDimension[0]) | 0;
-            for (var i = data.rowPlus; i--; ) {
+            for (var i = data.rowPlus - 1; i--; ) {
                 fieldValues.splice(0, 1);
                 fieldValues.push(createBlockRow(freeBlock));
             }

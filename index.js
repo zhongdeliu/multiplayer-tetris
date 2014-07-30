@@ -46,8 +46,9 @@ io.on('connection', function(socket) {
             players[socket.name].game = game;
         }
         io.emit('players', players);
+        
         if (game.rowPlus > 0) {
-            io.emit('rowPlus', {
+            io.emit('duell.rowPlus', {
                 player: socket.name,
                 rowPlus: game.rowPlus
             });    
