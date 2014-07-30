@@ -3,6 +3,9 @@ body {
 .top-bar {
     margin-bottom: 20px;
 }
+.isDuellMode {
+    background-color: #a90a0a;
+}
 .list-img img {
     vertical-align: top;
     margin-bottom: 5px;

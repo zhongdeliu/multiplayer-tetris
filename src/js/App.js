@@ -180,6 +180,7 @@ angular.module('App', [
                 points: $scope.points,
                 level: $scope.level,
                 rowCount: $scope.rowCount,
+                rowPlus: rowsToRemove.length,
                 field: stage.toDataURL()
             });
         }
@@ -323,7 +324,16 @@ angular.module('App', [
         }
         return emptyRow;
     }
-
+    
+    function createBlockRow(freeBlock) {
+        var row = [];
+    
+        for (var j = 0; j < fieldDimension[0]; j++) {
+            row[j] = (j !== freeBlock) ? {color: '#666'} : false;
+        }
+        return row;
+    }
+    
     function initGame() {
         $scope.gameInitialized = true;
         $scope.gameOver = false;
@@ -416,8 +426,15 @@ angular.module('App', [
     };
 
     //Socket stuff
-    socket = io.connect('http://' + $window.location.host);
+    socket = io.connect($window.location.protocol + '//' + $window.location.host);
     socket.on('players', function(players) {
+        if (players.rowPlus && players.rowPlus > 0 && $scope.isDuellMode) {
+            var freeBlock = (Math.random() * fieldDimension[0]) | 0;
+            for (var i = players.rowPlus; i--; ) {
+                fieldValues.splice(0, 1);
+                fieldValues.push(createBlockRow(freeBlock));
+            }
+        }
         $scope.$apply(function() {
             $scope.players = players;
         });

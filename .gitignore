@@ -6,6 +6,6 @@ build/
 bin/
 node_modules/
 bower_components/
-
+.c9/
 
 scores.json

@@ -21,7 +21,7 @@
 
 </head>
 <body ng-controller="GameController" ng-init="gameStopped=true">
-    <nav class="top-bar">
+    <nav class="top-bar" ng-class="{'isDuellMode':isDuellMode==true}">
         <ul class="title-area">
             <li class="name">
                 <h1><a href="./">Tetris <small>({{version}})</small></a></h1>
@@ -41,8 +41,7 @@
                     <div class="row collapse">
                         <div class="medium-8 columns">
                             <input type="text" placeholder="Your name" ng-model="inputName" />
-                            <input type="checkbox" id="checkbox1" ng-model="isDuell" ng-hide="true"/><label ng-hide="true" for="checkbox1">Duell</label>
-                            <input type="text" placeholder="GameName" ng-model="gameName" ng-show="isDuell" />
+                            <input id="checkboxDuell" type="checkbox" ng-model="isDuellMode"><label for="checkboxDuell">DUELL mode</label>
                         </div>
                         <div class="medium-4 columns">
                             <a href="#" class="button postfix" ng-click="init()">Go</a>
