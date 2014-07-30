@@ -103,7 +103,7 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
                     break;
                 }
             }
-            createjs.Sound.play("Drop");
+            //createjs.Sound.play("Drop");
         }
 
         clearKeyEvent();
