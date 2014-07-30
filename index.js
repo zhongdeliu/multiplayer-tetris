@@ -41,20 +41,17 @@ io.on('connection', function(socket) {
             }
         }
     });
-     socket.on('room join', function(gameName) {
-        /*
-        game.name = gameName;
-        game.players[socket.name] = players[socket.name];
-        socket.join(game.name, function() {
-            io.sockets.in(game.name).emit('player joined room', game.players);
-        });
-        */
-    });
     socket.on('game status', function(game) {
         if (players[socket.name]) {
             players[socket.name].game = game;
         }
         io.emit('players', players);
+        if (game.rowPlus > 0) {
+            io.emit('rowPlus', {
+                player: socket.name,
+                rowPlus: game.rowPlus
+            });    
+        }
     });
     socket.on('disconnect', function() {
         delete players[socket.name];

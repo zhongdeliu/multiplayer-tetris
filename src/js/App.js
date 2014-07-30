@@ -427,14 +427,16 @@ angular.module('App', [
 
     //Socket stuff
     socket = io.connect($window.location.protocol + '//' + $window.location.host);
-    socket.on('players', function(players) {
-        if (players.rowPlus && players.rowPlus > 0 && $scope.isDuellMode) {
+    socket.on('rowPlus', function(data) {
+       if ($scope.isDuellMode) {
             var freeBlock = (Math.random() * fieldDimension[0]) | 0;
-            for (var i = players.rowPlus; i--; ) {
+            for (var i = data.rowPlus; i--; ) {
                 fieldValues.splice(0, 1);
                 fieldValues.push(createBlockRow(freeBlock));
             }
-        }
+       }
+    });
+    socket.on('players', function(players) {
         $scope.$apply(function() {
             $scope.players = players;
         });
