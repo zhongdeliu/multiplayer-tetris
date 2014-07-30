@@ -1,6 +1,6 @@
 {
   "name": "tetris-server",
-  "version": "0.7.30",
+  "version": "0.7.43",
   "description": "Multiplayer Javascript Tetris (node.js, easeljs, angular.js, socket.io, foundation.css) ",
   "main": "index.js",
   "dependencies": {
