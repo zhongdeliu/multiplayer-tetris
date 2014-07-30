@@ -16,7 +16,8 @@ var scoreSchema = mongoose.Schema({
     name: String,
     score: Number,
     level: Number,
-    rowCount: Number
+    rowCount: Number,
+    isDuell: Boolean
 });
 var Score = mongoose.model('Score', scoreSchema);
 

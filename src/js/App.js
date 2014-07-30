@@ -134,7 +134,8 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
                         socket.emit('score submit', {
                             score: $scope.points,
                             level: $scope.level,
-                            rowCount: $scope.rowCount
+                            rowCount: $scope.rowCount,
+                            isDuell: $scope.isDuellMode
                         });
                     }
                 }
