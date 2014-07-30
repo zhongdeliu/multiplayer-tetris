@@ -135,6 +135,7 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
                             score: $scope.points,
                             level: $scope.level,
                             rowCount: $scope.rowCount,
+                            rowsRecieved: $scope.rowsRecieved,
                             isDuell: $scope.isDuellMode
                         });
                     }
@@ -357,6 +358,7 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
         $scope.blocksCount = {};
         $scope.totalBlockCount = 0;
         $scope.rowCount = 0;
+        $scope.rowsRecieved = 0;
 
         Object.keys(Shapes).forEach(function(value) {
             $scope.blocksCount[value] = {
@@ -427,9 +429,9 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
                     fieldValues.splice(0, 1);
                     fieldValues.push(createBlockRow(freeBlock));
                 }
-
             }
             $scope.$apply(function() {
+                $scope.rowsRecieved += data.rowPlus;
                 $scope.duellLog.unshift(data);
             });
         }

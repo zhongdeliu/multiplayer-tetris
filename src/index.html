@@ -115,13 +115,24 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <h2>Highscore</h2>
-            <ol>
-                <li ng-repeat="score in scores">
-                    <h4>{{score.score}} <small> Level {{score.level}}, Reihen: {{score.rowCount}} - <b>{{score.name}}</b></small></h4>
-                </li>
-            </ol>
+        <div class="row" ng-init="scores=[{score:1,isDuell:true}]">
+            <div class="medium-6 columns">
+                <h2>DuellMode Highscore</h2>
+                <ol>
+                    <li ng-repeat="score in scores" ng-show="score.isDuell">
+                        <h4>{{score.score}} <small> Level {{score.level}}, Reihen: {{score.rowCount}} - <b>{{score.name}}</b></small></h4>
+                    </li>
+                </ol>
+            </div>
+            {{scores}}
+            <div class="medium-6 columns">
+                <h2>Highscore</h2>
+                <ol>
+                    <li ng-repeat="score in scores" ng-show="!score.isDuell">
+                        <h4>{{score.score}} <small> Level {{score.level}}, Reihen: {{score.rowCount}} - <b>{{score.name}}</b></small></h4>
+                    </li>
+                </ol>
+            </div>
         </div>
         <!--div class="row collapse">
             <h3>Chat</h3>
