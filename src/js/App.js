@@ -1,12 +1,7 @@
 /**
  * This is the main application module
  */
-angular.module('App', [
-    'Settings',
-    'Services',
-    'GameLogic',
-    'Drawing'
-])
+angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
 
 .controller('GameController', function($scope, $window, BlockFactory, Shapes, Colors, FIELD_UNIT_SIZE, FIELD_SIZE, DrawService, UtilService, PointsService) {
     var KEY = {
@@ -26,6 +21,7 @@ angular.module('App', [
     var socket;
     $scope.players = [];
     $scope.chat = [];
+    $scope.duellLog = [];
     $scope.isMultiplayer = false;
 
     $scope.thumbnails = {};
@@ -76,7 +72,8 @@ angular.module('App', [
             if (checkMove(ACTION.RIGHT)) {
                 $scope.activeBlock.position.x++;
             }
-        } else if ($scope.isKeyDown(KEY.LEFT)) {
+        }
+        else if ($scope.isKeyDown(KEY.LEFT)) {
             if (checkMove(ACTION.LEFT)) {
                 $scope.activeBlock.position.x--;
             }
@@ -86,7 +83,8 @@ angular.module('App', [
             if (checkMove(ACTION.ROTATE)) {
                 $scope.activeBlock.rotation = ($scope.activeBlock.rotation + 1) % 4;
             }
-        } else if ($scope.isKeyDown(KEY.DOWN)) {
+        }
+        else if ($scope.isKeyDown(KEY.DOWN)) {
             if (checkMove(ACTION.DOWN)) {
                 $scope.activeBlock.position.y++;
             }
@@ -96,7 +94,8 @@ angular.module('App', [
             for (var h = 0; h < fieldDimension[1]; h++) {
                 if (checkMove(ACTION.DOWN)) {
                     $scope.activeBlock.position.y++;
-                } else {
+                }
+                else {
                     $scope.activeBlock.position.fixed = true;
                     updatePoints({
                         droppedLines: h
@@ -118,7 +117,8 @@ angular.module('App', [
 
             if (checkMove(ACTION.DOWN)) {
                 $scope.activeBlock.position.y++;
-            } else {
+            }
+            else {
                 //Place Block and get new Block
                 x = $scope.activeBlock.position.x;
                 y = $scope.activeBlock.position.y;
@@ -137,7 +137,8 @@ angular.module('App', [
                             rowCount: $scope.rowCount
                         });
                     }
-                } else {
+                }
+                else {
                     for (i = 0; i < 4; i++) {
                         for (j = 0; j < 4; j++) {
                             if (Shapes[$scope.activeBlock.type][r][i][j]) {
@@ -235,58 +236,58 @@ angular.module('App', [
         }
 
         switch (direction) {
-            case ACTION.ROTATE:
-                y = (y === -1) ? 0 : y;
-                r = (r + 1) % 4;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        if (Shapes[$scope.activeBlock.type][r][i][j]) {
-                            if (x + j < 0 || x + j >= fieldDimension[0] || y + i >= fieldDimension[1] || fieldValues[y + i][x + j]) {
-                                return false;
-                            }
+        case ACTION.ROTATE:
+            y = (y === -1) ? 0 : y;
+            r = (r + 1) % 4;
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    if (Shapes[$scope.activeBlock.type][r][i][j]) {
+                        if (x + j < 0 || x + j >= fieldDimension[0] || y + i >= fieldDimension[1] || fieldValues[y + i][x + j]) {
+                            return false;
                         }
                     }
                 }
-                break;
-            case ACTION.DOWN:
-                y = y + 1;
-                y = (y === -1) ? 0 : y;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        if (Shapes[$scope.activeBlock.type][r][i][j]) {
-                            if (y + i >= fieldDimension[1] || fieldValues[y + i][x + j]) {
-                                return false;
-                            }
+            }
+            break;
+        case ACTION.DOWN:
+            y = y + 1;
+            y = (y === -1) ? 0 : y;
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    if (Shapes[$scope.activeBlock.type][r][i][j]) {
+                        if (y + i >= fieldDimension[1] || fieldValues[y + i][x + j]) {
+                            return false;
                         }
                     }
                 }
-                break;
-            case ACTION.LEFT:
-                x = x - 1;
-                y = (y === -1) ? 0 : y;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        if (Shapes[$scope.activeBlock.type][r][i][j]) {
-                            if (x + j < 0 || fieldValues[y + i][x + j]) {
-                                return false;
-                            }
+            }
+            break;
+        case ACTION.LEFT:
+            x = x - 1;
+            y = (y === -1) ? 0 : y;
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    if (Shapes[$scope.activeBlock.type][r][i][j]) {
+                        if (x + j < 0 || fieldValues[y + i][x + j]) {
+                            return false;
                         }
                     }
                 }
-                break;
-            case ACTION.RIGHT:
-                x = x + 1;
-                y = (y === -1) ? 0 : y;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        if (Shapes[$scope.activeBlock.type][r][i][j]) {
-                            if (x + j >= fieldDimension[0] || fieldValues[y + i][x + j]) {
-                                return false;
-                            }
+            }
+            break;
+        case ACTION.RIGHT:
+            x = x + 1;
+            y = (y === -1) ? 0 : y;
+            for (i = 0; i < 4; i++) {
+                for (j = 0; j < 4; j++) {
+                    if (Shapes[$scope.activeBlock.type][r][i][j]) {
+                        if (x + j >= fieldDimension[0] || fieldValues[y + i][x + j]) {
+                            return false;
                         }
                     }
                 }
-                break;
+            }
+            break;
         }
 
         return true;
@@ -324,16 +325,18 @@ angular.module('App', [
         }
         return emptyRow;
     }
-    
+
     function createBlockRow(freeBlock) {
         var row = [];
-    
+
         for (var j = 0; j < fieldDimension[0]; j++) {
-            row[j] = (j !== freeBlock) ? {color: '#666'} : false;
+            row[j] = (j !== freeBlock) ? {
+                color: '#666'
+            } : false;
         }
         return row;
     }
-    
+
     function initGame() {
         $scope.gameInitialized = true;
         $scope.gameOver = false;
@@ -410,33 +413,26 @@ angular.module('App', [
             game: {}
         });
 
-        /*
-        if ($scope.isDuell) {
-            socket.on('player joined room', function(players) {
-                $scope.$apply(function() {
-                    $scope.playersRoom = players;
-                });
-            });
-            socket.emit('room join', $scope.gameName);
-        } else {
-            initGame();
-        }
-        */
         initGame();
     };
 
     //Socket stuff
     socket = io.connect($window.location.protocol + '//' + $window.location.host);
     socket.on('duell.rowPlus', function(data) {
-       if ($scope.isDuellMode) {
-            var freeBlock = (Math.random() * fieldDimension[0]) | 0;
-            for (var i = data.rowPlus; i--; ) {
-                fieldValues.splice(0, 1);
-                fieldValues.push(createBlockRow(freeBlock));
+        if ($scope.isDuellMode) {
+            if (data.player !== $scope.playerName) {
+                var freeBlock = (Math.random() * fieldDimension[0]) | 0;
+                for (var i = data.rowPlus; i--;) {
+                    fieldValues.splice(0, 1);
+                    fieldValues.push(createBlockRow(freeBlock));
+                }
+
             }
-            $scope.duellLog.unshift(data);
-       }
-       
+            $scope.$apply(function() {
+                $scope.duellLog.unshift(data);
+            });
+        }
+
     });
     socket.on('players', function(players) {
         $scope.$apply(function() {
@@ -452,5 +448,5 @@ angular.module('App', [
         $scope.$apply(function() {
             $scope.version = version;
         });
-    });    
+    });
 });
