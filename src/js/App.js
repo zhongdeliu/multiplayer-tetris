@@ -103,6 +103,7 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
                     break;
                 }
             }
+            createjs.Sound.play("Drop");
         }
 
         clearKeyEvent();
@@ -418,6 +419,13 @@ angular.module('App', ['Settings', 'Services', 'GameLogic', 'Drawing'])
 
         initGame();
     };
+
+    //Sound stuff
+    var audioPath = "assets/";
+    var manifest = [
+        {id:"Drop", src:"drop.mp3"}
+    ];
+    createjs.Sound.registerManifest(manifest, audioPath);
 
     //Socket stuff
     socket = io.connect($window.location.protocol + '//' + $window.location.host);
