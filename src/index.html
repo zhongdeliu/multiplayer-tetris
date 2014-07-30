@@ -120,7 +120,7 @@
                 <h2>DuellMode Highscore</h2>
                 <ol>
                     <li ng-repeat="score in scores" ng-show="score.isDuell">
-                        <h4>{{score.score}} <small> Level: {{score.level}}, Reihen: {{score.rowCount}} Reihen erhalten: {{score.rowRecieved} }- <b>{{score.name}}</b></small></h4>
+                        <h4>{{score.score}} <small> Level: {{score.level}}, Reihen: {{score.rowCount}} Reihen erhalten: {{score.rowRecieved | '-'}}- <b>{{score.name}}</b></small></h4>
                     </li>
                 </ol>
             </div>
