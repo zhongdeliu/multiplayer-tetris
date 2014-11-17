@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Tetris by zhongdeliu</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Tetris</h1>
+        <h2>Multiplayer Javascript Tetris (node.js, easeljs, angular.js, socket.io, foundation.css)</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/zhongdeliu/tetris/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/zhongdeliu/tetris/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/zhongdeliu/tetris" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="tetris" class="anchor" href="#tetris" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tetris</h1>
+
+<p>Multiplayer Javascript Tetris (node.js, easeljs, angular.js, socket.io, foundation.css) </p>
+
+<ul>
+<li>Classical Tetris type of game</li>
+<li>Multiplayer feature</li>
+<li>Live updates/broadcast of all players playing</li>
+<li>Highscores</li>
+</ul>
+
+<p>Demo here: <a href="http://multi-tetris.herokuapp.com/">http://multi-tetris.herokuapp.com/</a></p>
+
+<h2>
+<a id="developmentsetup" class="anchor" href="#developmentsetup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development/Setup</h2>
+
+<p>Dependencies for the Server (npm)</p>
+
+<pre><code>    npm install
+</code></pre>
+
+<p>Dependencies for the client (hard copied within the repository)</p>
+
+<pre><code>    src/js/libs
+</code></pre>
+
+<p>But you can use bower to fetch a copy of them: <code>bower install</code></p>
+
+<p>To start the Server:</p>
+
+<pre><code>    node index.js
+</code></pre>
+
+<p>It starts the express web and the socket server. The express server only delivers the static files from /src to the http route /app.</p>
+
+<p>Point Browser to: <code>http://localhost:2550</code> (alter the hostname/port to match your node server), enter a name and play or watch others currently playing - live.</p>
+
+<p>Play here: <a href="http://multi-tetris.herokuapp.com/">http://multi-tetris.herokuapp.com/</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
